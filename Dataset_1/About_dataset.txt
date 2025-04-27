@@ -1,0 +1,1 @@
+This dataset includes five object categories: Phone, Keyboard, Laptop, Monitor, and Mouse.
