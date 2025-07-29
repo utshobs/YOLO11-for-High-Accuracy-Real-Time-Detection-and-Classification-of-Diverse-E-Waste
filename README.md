@@ -28,7 +28,7 @@ Follow the steps below to train the YOLOv11 model on your dataset using Google C
 ### 1️⃣ Clone the Repository
 
 ```bash
-!git clone https://github.com/your-username/yolov11-ewaste-detection.git
+!git clone https://github.com/utshobs/YOLO11-for-High-Accuracy-Real-Time-Detection-and-Classification-of-Diverse-E-Waste.git
 ```
 
 ---
@@ -42,7 +42,7 @@ Follow the steps below to train the YOLOv11 model on your dataset using Google C
 ```
 ---
 
-### 3️⃣ Prepare Dataset
+### 3️⃣ Prepare Dataset and Upload the specific dataset (Dataset_1 or Dataset_2) folder on the Goggle Colab notebook
 
 Ensure your datasets (`Dataset_1`) follow the YOLO format for detection:
 
@@ -61,6 +61,7 @@ Each image must have a corresponding `.txt` label file in the `labels/` folder.
 Ensure the train and val split from `Dataset_1` according to your need.
 
 ---
+
 
 ### 4️⃣ Train the Model
 
