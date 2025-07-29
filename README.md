@@ -12,18 +12,14 @@ This repository contains the implementation and training pipeline for an e-waste
 │   └── val/
 ├── Dataset_2/
 │   ├── train/
-│   └── val/
-├── yolov11/                   # YOLOv11 model and source code
-├── train.py                   # Training script
-├── detect.py                  # Inference script
-├── runs/                      # Saved training outputs
-├── requirements.txt           # Python dependencies
+│   └── val/                
+├── train.py                                                           
 └── README.md
-```
+
 
 ---
 
-## 🚀 Getting Started (Google Colab Recommended)
+## 🚀 Getting Started (Google Colab)
 
 Follow the steps below to train the YOLOv11 model on your dataset using Google Colab.
 
@@ -33,7 +29,6 @@ Follow the steps below to train the YOLOv11 model on your dataset using Google C
 
 ```bash
 !git clone https://github.com/your-username/yolov11-ewaste-detection.git
-%cd yolov11-ewaste-detection
 ```
 
 ---
@@ -41,16 +36,13 @@ Follow the steps below to train the YOLOv11 model on your dataset using Google C
 ### 2️⃣ Install Dependencies
 
 ```bash
-!pip install -r requirements.txt
+!pip install ultralytics
 ```
-
-Make sure to install essential packages like `torch`, `opencv-python`, `matplotlib`, etc.
-
 ---
 
 ### 3️⃣ Prepare Dataset
 
-Ensure your datasets (`Dataset_1` and `Dataset_2`) follow the YOLO format:
+Ensure your datasets (`Dataset_1`) follow the YOLO format for detection:
 
 ```
 Dataset_1/
@@ -60,9 +52,11 @@ Dataset_1/
 ├── val/
 │   ├── images/
 │   └── labels/
+├── data.yaml 
 ```
 
 Each image must have a corresponding `.txt` label file in the `labels/` folder.
+Ensure the train and val split from `Dataset_1` according to your need.
 
 ---
 
@@ -71,10 +65,10 @@ Each image must have a corresponding `.txt` label file in the `labels/` folder.
 Use the command below to train on `Dataset_1`:
 
 ```bash
-!python train.py --img 640 --batch 16 --epochs 100 --data dataset1.yaml --weights yolov11.pt --name yolo11_dataset1
+!yolo detect train data=/content/E-waste-1/data.yaml model=yolo11s.pt epochs=50 imgsz=640
 ```
 
-To train on `Dataset_2`, update the `--data` flag:
+To train on `Dataset_2`:
 
 ```bash
 !python train.py --img 640 --batch 16 --epochs 100 --data dataset2.yaml --weights yolov11.pt --name yolo11_dataset2
@@ -82,42 +76,18 @@ To train on `Dataset_2`, update the `--data` flag:
 
 ---
 
-### 5️⃣ Monitor Training (Optional)
+### 5️⃣ Export Trained Model
 
-```python
-%load_ext tensorboard
-%tensorboard --logdir runs/train
-```
-
-This command launches TensorBoard in Colab to visualize training metrics.
-
----
-
-### 6️⃣ Export Trained Model
-
-After training, copy the best model weights for future inference:
+After training, download the best model weights for future inference:
 
 ```bash
-!cp runs/train/yolo11_dataset1/weights/best.pt /content/
+!zip -r /content/runs.zip /content/runs/
 ```
 
+Then download the runs.zip folder. This folder includes all the training results files and the best trained model.
 ---
 
-### 7️⃣ Run Inference
 
-Use the trained model to detect e-waste objects in new images:
-
-```bash
-!python detect.py --weights best.pt --img 640 --source path/to/image.jpg
-```
-
-To test on a folder of images:
-
-```bash
-!python detect.py --weights best.pt --img 640 --source path/to/folder/
-```
-
----
 
 ## 📌 Notes
 
