@@ -9,12 +9,12 @@ This repository contains the implementation and training pipeline for an e-waste
 ```
 ├── Dataset_1/
 │   ├── train/
-│   └── val/
+│   ├── val/
+│   └── data.yaml
 ├── Dataset_2/
 │   ├── train/
-│   └── val/                
-├── train.py                                                           
-└── README.md
+│   └── val/                                                                          
+└── README.md             
 
 
 ---
@@ -37,6 +37,8 @@ Follow the steps below to train the YOLOv11 model on your dataset using Google C
 
 ```bash
 !pip install ultralytics
+#or
+!pip install --upgrade ultralytics
 ```
 ---
 
@@ -71,7 +73,14 @@ Use the command below to train on `Dataset_1`:
 To train on `Dataset_2`:
 
 ```bash
-!python train.py --img 640 --batch 16 --epochs 100 --data dataset2.yaml --weights yolov11.pt --name yolo11_dataset2
+from ultralytics import YOLO
+
+#loading classification model
+model = YOLO('yolo11n-cls.pt')
+
+#train the model
+results = model.train(data='/content/e-waste', epochs=50, imgsz=640)
+
 ```
 
 ---
@@ -92,9 +101,7 @@ Then download the runs.zip folder. This folder includes all the training results
 ## 📌 Notes
 
 - Images in `Dataset_1` were resized to **640×640** using **Roboflow**.
-- `Dataset_2` uses YOLOv11's **default image preprocessing** pipeline.
-- Label files follow standard YOLO format:  
-  `class_id x_center y_center width height` (all values normalized to [0, 1]).
+- `Dataset_2` images also can be used for direct training.
 
 ---
 
@@ -104,7 +111,6 @@ To enhance model robustness and generalization, future directions include:
 
 - **Multi-modal learning**: combining images with sensor data, metadata, or text.
 - **Evaluation on external noisy datasets** to test real-world performance.
-- **Model optimization**: applying quantization and pruning for mobile/edge deployment.
 
 ---
 
